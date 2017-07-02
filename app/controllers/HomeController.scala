@@ -9,7 +9,7 @@ import services.UserService
 
 @Singleton
 class HomeController @Inject()(val userService: UserService, val messagesApi: MessagesApi)
-  extends Controller
+    extends Controller
     with I18nSupport
     with AuthConfigSupport
     with OptionalAuthElement {
