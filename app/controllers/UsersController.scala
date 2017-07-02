@@ -15,18 +15,19 @@ class UsersController @Inject()(val userService: UserService, val messagesApi: M
     with AuthConfigSupport
     with AuthenticationElement {
 
-  def index: Action[AnyContent] = StackAction { implicit request =>
-    userService.findAll
+  def index(pager: Pager[models.User]): Action[AnyContent] = StackAction { implicit request =>
+    userService
+      .findAll(pager) // pagerを渡す
       .map { users =>
-        Ok(views.html.users.index(loggedIn, users))
-      }
+      Ok(views.html.users.index(loggedIn, users)) // SearchResultをビューに渡す
+    }
       .recover {
         case e: Exception =>
           Logger.error(s"occurred error", e)
-          Redirect(routes.UsersController.index())
+          Redirect(routes.UsersController.index(Pager.default))
             .flashing("failure" -> Messages("InternalError"))
       }
-      .getOrElse(InternalServerError(Messages("InternaError")))
+      .getOrElse(InternalServerError(Messages("InternalError")))
   }
 
   def show(userId: Long) = StackAction { implicit request =>

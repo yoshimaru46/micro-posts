@@ -52,10 +52,18 @@ libraryDependencies ++= Seq(
   "org.flywaydb"           %% "flyway-play"                  % "3.1.0",
   "jp.t2v"                 %% "play2-auth"                   % "0.14.2",
   "jp.t2v"                 %% "play2-auth-test"              % "0.14.2" % Test,
+  "jp.t2v"                 %% "play2-pager"                  % "0.1.0",
+  "jp.t2v"                 %% "play2-pager-scalikejdbc"      % "0.1.0",
   "com.github.t3hnar"      %% "scala-bcrypt" % "3.0"
 )
 
-TwirlKeys.templateImports ++= Seq("forms._")
+TwirlKeys.templateImports ++= Seq("jp.t2v.lab.play2.pager._", "forms._")
+
+play.sbt.routes.RoutesKeys.routesImport ++= Seq(
+  "jp.t2v.lab.play2.pager.Pager",
+  "jp.t2v.lab.play2.pager.Bindables._",
+  "models._"
+)
 
 lazy val envConfig = settingKey[Config]("env-config")
 
