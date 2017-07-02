@@ -15,7 +15,7 @@
                 @if(userOpt.isEmpty) {
                 <a class="navbar-brand" href="@routes.HomeController.index(Pager.default)">@Messages("ApplicationName")</a>
                 } else {
-                <a class="navbar-brand" href="#">@Messages("ApplicationName")</a>
+                <a class="navbar-brand" href="@routes.HomeController.index(Pager.default)">@Messages("ApplicationName")</a>
                 }
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

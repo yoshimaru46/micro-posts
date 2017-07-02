@@ -49,12 +49,14 @@ libraryDependencies ++= Seq(
   "org.scalikejdbc"        %% "scalikejdbc-jsr310"           % "2.5.2",
   "com.adrianhurt"         %% "play-bootstrap"               % "1.1-P25-B3",
   "mysql"                  % "mysql-connector-java"          % "6.0.6",
+  "org.postgresql"         % "postgresql"                    % "42.0.0",
   "org.flywaydb"           %% "flyway-play"                  % "3.1.0",
   "jp.t2v"                 %% "play2-auth"                   % "0.14.2",
   "jp.t2v"                 %% "play2-auth-test"              % "0.14.2" % Test,
   "jp.t2v"                 %% "play2-pager"                  % "0.1.0",
   "jp.t2v"                 %% "play2-pager-scalikejdbc"      % "0.1.0",
-  "com.github.t3hnar"      %% "scala-bcrypt" % "3.0"
+  "org.flywaydb"           %% "flyway-play"                  % "3.1.0",
+  "com.github.t3hnar"      %% "scala-bcrypt"                 % "3.0"
 )
 
 TwirlKeys.templateImports ++= Seq("jp.t2v.lab.play2.pager._", "forms._")
@@ -77,4 +79,17 @@ flywayDriver := envConfig.value.getString("jdbcDriver")
 flywayUrl := envConfig.value.getString("jdbcUrl")
 flywayUser := envConfig.value.getString("jdbcUserName")
 flywayPassword := envConfig.value.getString("jdbcPassword")
+
+herokuJdkVersion in Compile := "1.8"
+
+herokuAppName in Compile := "yshr446-micro-posts" // ご自身のアプリケーション名を指定してください
+
+// prod/application.confであることを確認してください
+herokuProcessTypes in Compile := Map(
+  "web" -> s"target/universal/stage/bin/${normalizedName.value} -Dhttp.port=$$PORT -Dconfig.resource=prod/application.conf -Ddb.default.migration.auto=true"
+)
+
+herokuConfigVars in Compile := Map(
+  "JAVA_OPTS" -> "-Xmx512m -Xms512m"
+)
 
