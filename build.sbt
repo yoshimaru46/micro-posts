@@ -49,14 +49,11 @@ libraryDependencies ++= Seq(
   "org.scalikejdbc"        %% "scalikejdbc-jsr310"           % "2.5.2",
   "com.adrianhurt"         %% "play-bootstrap"               % "1.1-P25-B3",
   "mysql"                  % "mysql-connector-java"          % "6.0.6",
-  "org.flywaydb"           %% "flyway-play"                  % "3.1.0"
+  "org.flywaydb"           %% "flyway-play"                  % "3.1.0",
+  "com.github.t3hnar" %% "scala-bcrypt" % "3.0"
 )
 
-// Adds additional packages into Twirl
-// TwirlKeys.templateImports ++= Seq(...)
-
-// Adds additional packages into conf/routes
-// play.sbt.routes.RoutesKeys.routesImport += "com.example.binders._"
+TwirlKeys.templateImports ++= Seq("forms._")
 
 lazy val envConfig = settingKey[Config]("env-config")
 
