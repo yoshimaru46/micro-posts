@@ -6,7 +6,6 @@ import scalikejdbc._, jsr310._
 import skinny.orm._
 import jp.t2v.lab.play2.pager.{ OrderType, Sortable }
 
-
 case class User(id: Option[Long] = None,
                 name: String,
                 email: String,

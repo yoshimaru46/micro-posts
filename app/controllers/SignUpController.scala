@@ -5,13 +5,14 @@ import javax.inject.{ Inject, Singleton }
 
 import com.github.t3hnar.bcrypt._
 import forms.SignUp
-import models.User
+import models.{ MicroPost, User }
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.i18n.{ I18nSupport, Messages, MessagesApi }
 import play.api.mvc._
 import play.api.{ Configuration, Logger }
 import services.UserService
+import jp.t2v.lab.play2.pager.Pager
 
 @Singleton
 class SignUpController @Inject()(
@@ -48,13 +49,13 @@ class SignUpController @Inject()(
           userService
             .create(user)
             .map { _ =>
-              Redirect(routes.HomeController.index())
+              Redirect(routes.HomeController.index(Pager.default))
                 .flashing("success" -> Messages("SignUpSucceeded"))
             }
             .recover {
               case e: Exception =>
                 Logger.error(s"occurred error", e)
-                Redirect(routes.HomeController.index())
+                Redirect(routes.HomeController.index(Pager.default))
                   .flashing("failure" -> Messages("InternalError"))
             }
             .getOrElse(InternalServerError(Messages("InternalError")))
